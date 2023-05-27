@@ -23,8 +23,8 @@ def main():
     uploaded_files = st.file_uploader("Upload PDFs", accept_multiple_files=True, type=["pdf"], disabled=disable_input)
 
     if uploaded_files:
-        st.success(f"Uploaded {len(uploaded_files)} files")
         knowledge_base = process_pdfs(uploaded_files)
+        st.success(f"Uploaded {len(uploaded_files)} files")
 
     # Create Text Input
     text_input = st.text_input("Ask a question about your PDFs", disabled=disable_input)
