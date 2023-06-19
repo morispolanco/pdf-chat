@@ -30,13 +30,11 @@ streamlit run app.py
 ```
 
 ## Usage
-1. Upload PDF files using the file uploader on the screen. After the files have been processed, you will get a success message.
+1. Upload PDF files using the file uploader on the screen. After the files have been processed, you can ask the bot questions.
 
-2. After getting the success message you can use the text input to ask questions to the chat bot. The chat bot will answer your questions based on the PDFs you uploaded.
+2. You can use the text input to ask questions to the chat bot. The chat bot will answer your questions based on the PDFs you uploaded.
 
 *Note - The chat bot will not give you an answer if the question does not have a relevant answer in the PDFS.*
 
 ## Possible Future Improvements
-1. Add a feature to save the chat history.
-
-2. Add a feature to save the knowledge base created from the PDFs. This will allow the user to use the same knowledge base for multiple sessions. And allow the user to add PDFs to this knowledge base as they please.
+1. Add a feature to save the Vector Store created from the PDFs. This will allow the user to use the same Vector Store for multiple sessions. And allow the user to add PDFs to this Vector Store as they please.

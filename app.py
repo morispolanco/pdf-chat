@@ -1,45 +1,49 @@
 import streamlit as st
-from helpers import get_api_key, process_pdfs
-from langchain.llms import OpenAI
+from dotenv import load_dotenv
+from utils import extract_pdfs, make_chunks, create_embeddings, get_conversation_chain, handle_input
+from langchain.llms import OpenAI, HuggingFaceHub
 from langchain.chains.question_answering import load_qa_chain
 from langchain.callbacks import get_openai_callback
+from htmlTemplates import css
 
 def main():
-    """ Variable to render web app functionality based on certain conditions """
-    disable_input = False
-
+    load_dotenv()
     # Create streamlit web app layout
-
-    # Basic Page Config
     st.set_page_config(page_title="PDF Chat bot")
+    st.write(css, unsafe_allow_html=True)
+
+    if "conversation" not in st.session_state:
+        st.session_state.conversation = None
+    if "chat_history" not in st.session_state:
+        st.session_state.chat_history = None
+
     st.header("PDF Chat bot")
+    # Basic Page Config
+    question = st.text_input("Ask a question about your PDFs")
 
-    # Check for API Key
-    if not get_api_key():
-        st.error("No OPENAI_API_KEY set. Please set environment variable and restart app to enable.")
-        disable_input = True
+    if question:
+        handle_input(question)
 
-    # Create File Uploader
-    uploaded_files = st.file_uploader("Upload PDFs", accept_multiple_files=True, type=["pdf"], disabled=disable_input)
+    # Create Sidebar
+    with st.sidebar:
+        st.subheader("Add PDFs")
+        docs = st.file_uploader("Upload PDFs", accept_multiple_files=True, type=["pdf"])
 
-    if uploaded_files:
-        knowledge_base = process_pdfs(uploaded_files)
-        st.success(f"Uploaded {len(uploaded_files)} files")
+        if st.button("Upload"):
+            with st.spinner("Processing"):
 
-    # Create Text Input
-    text_input = st.text_input("Ask a question about your PDFs", disabled=disable_input)
+                # Process PDFs
+                raw_text = extract_pdfs(docs)
 
-    if text_input:
-        relevant_docs = knowledge_base.similarity_search(text_input)
-        
-    # Process Output
-    llm = OpenAI()
-    chain = load_qa_chain(llm, chain_type="stuff")
+                # Create Text Chunks
+                text_chunks = make_chunks(raw_text)
 
-    with get_openai_callback() as cb:
-        response = chain.run(input_documents=relevant_docs, question=text_input)
+                # Create Embeddings
+                embeddings = create_embeddings(text_chunks)
 
-    st.write(response)
+                # Conversations with LLMs
+                st.session_state.conversation = get_conversation_chain(embeddings)
+
 
 if __name__ == "__main__":
     main()
