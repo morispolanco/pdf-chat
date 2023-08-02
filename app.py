@@ -8,6 +8,22 @@ from langchain.chains.question_answering import load_qa_chain
 from langchain.callbacks import get_openai_callback
 from htmlTemplates import css
 
+def handle_input(question):
+    # Get the chatbot response
+    response = st.session_state.conversation
+
+    if st.session_state.chat_history is not None:
+        # reverse the chat history before enumeration
+        reversed_chat_history = reversed(st.session_state.chat_history)
+
+        for i, message in enumerate(reversed_chat_history):
+            if i % 2 == 0:
+                st.write(user_template.replace(
+                    "{MSG}", message.content), unsafe_allow_html=True)
+            else:
+                st.write(bot_template.replace(
+                    "{MSG}", message.content), unsafe_allow_html=True)
+
 def main():
     openai.api_key = os.environ.get("OPENAI_API_KEY")
 
