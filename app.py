@@ -6,7 +6,6 @@ from utils import extract_pdfs, make_chunks, create_embeddings, get_conversation
 from langchain.llms import OpenAI, HuggingFaceHub
 from langchain.chains.question_answering import load_qa_chain
 from langchain.callbacks import get_openai_callback
-from htmlTemplates import css
 from htmlTemplates import css, bot_template, user_template
 
 def handle_input(question):
