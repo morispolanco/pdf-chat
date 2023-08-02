@@ -10,7 +10,7 @@ from langchain.chat_models import ChatOpenAI
 from langchain.memory import ConversationBufferMemory
 from langchain.chains import ConversationalRetrievalChain
 from htmlTemplates import bot_template, user_template
-from tiktoken import tiktoken
+import tiktoken
 
 
 openai.api_key = os.environ.get("OPENAI_API_KEY")
