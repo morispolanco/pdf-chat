@@ -9,7 +9,8 @@ from langchain.callbacks import get_openai_callback
 from htmlTemplates import css
 
 def main():
-    load_dotenv()
+    openai.api_key = os.environ.get("OPENAI_API_KEY")
+
     # Create streamlit web app layout
     st.set_page_config(page_title="PDF Chat bot")
     st.write(css, unsafe_allow_html=True)
