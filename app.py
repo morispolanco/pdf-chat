@@ -1,5 +1,5 @@
 import streamlit as st
-from tiktoken import tiktoken
+import tiktoken
 import openai
 import os
 from utils import extract_pdfs, make_chunks, create_embeddings, get_conversation_chain, handle_input
