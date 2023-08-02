@@ -1,4 +1,4 @@
-from dotenv import load_dotenv
+import openai
 import streamlit as st
 import os
 from PyPDF2 import PdfReader
