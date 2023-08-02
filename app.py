@@ -1,5 +1,7 @@
 import streamlit as st
-from dotenv import load_dotenv
+from tiktoken import tiktoken
+import openai
+import os
 from utils import extract_pdfs, make_chunks, create_embeddings, get_conversation_chain, handle_input
 from langchain.llms import OpenAI, HuggingFaceHub
 from langchain.chains.question_answering import load_qa_chain
