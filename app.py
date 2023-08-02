@@ -24,6 +24,15 @@ def handle_input(question):
                 st.write(bot_template.replace(
                     "{MSG}", message.content), unsafe_allow_html=True)
 
+def handle_input(question):
+    # Get the chatbot response
+    response = st.session_state.conversation
+    print('DEBUG: Response:', response)
+
+    if st.session_state.chat_history is not None:
+        # debug the chat history 
+        print('DEBUG: Chat history:', st.session_state.chat_history)
+        
 def main():
     openai.api_key = os.environ.get("OPENAI_API_KEY")
 
