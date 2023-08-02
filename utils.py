@@ -12,18 +12,7 @@ from langchain.chains import ConversationalRetrievalChain
 from htmlTemplates import bot_template, user_template
 
 
-def get_api_key():
-    """
-    Loads API key from .env file
-
-    Returns
-    -------
-    str
-        OPEN AI API key
-    """
-
-    load_dotenv()
-    return os.getenv("OPENAI_API_KEY")
+openai.api_key = os.environ.get("OPENAI_API_KEY")
 
 def read_pdf(pdf):
     """
